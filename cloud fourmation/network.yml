@@ -1,0 +1,116 @@
+Parameters:
+
+ EnvironmentName:
+    Description: An environment name that will be prefixed to resource names
+    Type: String
+
+ VpcCIDR:
+    Description: Please enter the IP range (CIDR notation) for this VPC
+    Type: String
+    Default: 10.0.0.0/16
+
+ PublicSubnetCIDR:
+    Description: Please enter the IP range (CIDR notation) for the public subnet in the first Availability Zone
+    Type: String
+    Default: 10.0.0.0/24
+
+ 
+Resources:
+  
+    myVPC:
+      Type: AWS::EC2::VPC
+      Properties:
+        CidrBlock: !Ref VpcCIDR
+        EnableDnsHostnames: true
+        Tags:
+            - Key: Name
+              Value: !Ref EnvironmentName
+
+
+    PublicSubnet1:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref myVPC
+        CidrBlock: !Ref PublicSubnetCIDR
+        AvailabilityZone: !Select [ 0, !GetAZs '' ]
+        MapPublicIpOnLaunch: true
+        Tags:
+           - Key: Name
+             Value: !Sub ${EnvironmentName} Public Subnet (AZ1)
+
+    myInternetGateway:
+      Type: AWS::EC2::InternetGateway
+      Properties:
+          Tags:
+             - Key: Name
+               Value: !Ref EnvironmentName
+
+    
+    VPCGatewayAttach:
+      Type: AWS::EC2::VPCGatewayAttachment
+      Properties:
+          VpcId:
+              Ref: myVPC
+          InternetGatewayId:
+              Ref: myInternetGateway
+
+    PublicRouteTable:
+      Type: AWS::EC2::RouteTable
+      Properties: 
+          VpcId: !Ref myVPC
+          Tags: 
+              - Key: Name 
+                Value: !Sub ${EnvironmentName} Public Routes
+
+    DefaultPublicRoute: 
+      Type: AWS::EC2::Route
+      DependsOn: VPCGatewayAttach
+      Properties: 
+          RouteTableId: !Ref PublicRouteTable
+          DestinationCidrBlock: 0.0.0.0/0
+          GatewayId: !Ref myInternetGateway
+
+    PublicSubnet1RouteTableAssociation:
+      Type: AWS::EC2::SubnetRouteTableAssociation
+      Properties:
+          RouteTableId: !Ref PublicRouteTable
+          SubnetId: !Ref PublicSubnet1
+
+    # InstanceSecurityGroup:
+    # Type: AWS::EC2::SecurityGroup
+    # Properties:
+    #     GroupDescription: Allow http to client host
+    #     VpcId:
+    #       Ref: myVPC
+    #     SecurityGroupIngress:
+    #     - IpProtocol: tcp
+    #       FromPort: 80
+    #       ToPort: 80
+    #       CidrIp: 0.0.0.0/0
+    #     SecurityGroupEgress:
+    #     - IpProtocol: tcp
+    #       FromPort: 80
+    #       ToPort: 80
+    #       CidrIp: 0.0.0.0/0
+    
+Outputs:
+      
+      
+    StackVPC:
+      Description: A reference to the created VPC
+      Value: !Ref myVPC
+      Export:
+          Name: !Sub "${EnvironmentName}-VPCID"
+
+    VPCPublicRouteTable:
+      Description: PublicRouteTable
+      Value: !Ref PublicRouteTable
+      Export:
+          Name: !Sub "${EnvironmentName}-PublicRouteTable"
+
+    PublicSubnet1:
+      Description: A reference to the public subnet in the 1st Availability Zone
+      Value: !Ref PublicSubnet1
+      Export:
+        Name: !Sub ${EnvironmentName}-PUB1-SN
+    

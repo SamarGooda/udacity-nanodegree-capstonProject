@@ -119,6 +119,7 @@ Resources:
             export DEBIAN_FRONTEND=noninteractive
             sudo apt-get update -y
             sudo apt-get install git apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y
+            sudo dpkg --configure -a
             sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 
             sudo chmod +x minikube
             sudo mkdir -p /usr/local/bin/
@@ -135,7 +136,7 @@ Resources:
             sudo mv ./kubectl /usr/local/bin/kubectl
             sudo usermod -aG docker ubuntu && newgrp docker
             minikube start
-            git clone https://github.com/SamarGooda/udacity-nanodegree-capstonProject.git
+            git clone https://github.com/SamarGooda/udacity-nanodegree-capstonProject.git  /project
             kubectl apply -f project/kubernetes/redis-deployment.yaml
             kubectl apply -f project/kubernetes/redis-service.yaml
             kubectl apply -f project/kubernetes/python-app-deployment.yaml

@@ -5,7 +5,7 @@ pipeline {
         stage('TEST') {
             steps {
                echo 'Hello World'
-                sh "python3 pythonapp/tests/test.py"
+                sh "python pythonapp/tests/test.py"
             }
         }
 

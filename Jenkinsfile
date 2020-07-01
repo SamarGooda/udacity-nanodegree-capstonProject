@@ -1,33 +1,31 @@
 pipeline {
     agent any
-    stages { 
 
-        stage('test') {
+    stages {
+        stage('TEST') {
             steps {
-                  echo 'Hello World'
-                  sh "python3 pythonapp/tests/test.py"
+               echo 'Hello World'
+                sh "python3 pythonapp/tests/test.py"
             }
         }
 
-       
         stage('build') {
             steps {
-                 echo 'Hi'
-                 sh " docker build . "
-                
+                sh "docker build --tag=python_app ."
             }
         }
 
-        stage('push image') {
-            steps { 
-                echo 'last one'
-                sh " docker push samargooda/capstonProject "
-            }
+        stage('PUSHING') {
+            steps {
+                 echo 'last one'
+                   sh " docker push samargooda/capstonProject "
+                }
+            } 
+        }
+
+        }
     }
 }
-
-
-
 
 
 

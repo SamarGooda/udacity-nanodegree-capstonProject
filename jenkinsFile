@@ -5,8 +5,7 @@ pipeline {
         stage('test') {
             steps {
                   echo 'Hello World'
-                # hadolint Dockerfile
-                  make lint
+                  sh "python3 pythonapp/tests/test.py"
             }
         }
 
@@ -14,7 +13,7 @@ pipeline {
         stage('build') {
             steps {
                  echo 'Hi'
-                 docker build .
+                 sh " docker build . "
                 
             }
         }
@@ -22,7 +21,7 @@ pipeline {
         stage('push image') {
             steps { 
                 echo 'last one'
-                docker push samargooda/udacity
+                sh " docker push samargooda/capstonProject "
             }
     }
 }

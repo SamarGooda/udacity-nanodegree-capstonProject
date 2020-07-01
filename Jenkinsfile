@@ -11,21 +11,23 @@ pipeline {
 
         stage('build') {
             steps {
-                sh "docker build --tag=capston_project:latest ."
+                sh "docker build --tag=python_app ."
             }
         }
 
+        
         stage('PUSHING') {
             steps {
-                 echo 'last one'
-                   sh " docker push samargooda/capston_project:latest "
+                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
+                  sh 'docker login -u=$DOCKER_REGISTRY_USER -p=$DOCKER_REGISTRY_PWD'
+                  sh 'docker tag python_app samargooda/capston_project:first'
+                  sh "docker push samargooda/capston_project:first"
                 }
             } 
         }
-
+        
+         }
         }
  
-
-
 
 

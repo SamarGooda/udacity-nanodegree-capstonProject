@@ -11,7 +11,7 @@ pipeline {
 
         stage('build') {
             steps {
-                sh "docker build --tag=python_app ."
+                sh "sudo docker build --tag=python_app ."
             }
         }
 

@@ -11,14 +11,14 @@ pipeline {
 
         stage('build') {
             steps {
-                sh "docker build --tag=capston_project ."
+                sh "docker build --tag=capston_project:latest ."
             }
         }
 
         stage('PUSHING') {
             steps {
                  echo 'last one'
-                   sh " docker push samargooda/capston_project "
+                   sh " docker push samargooda/capston_project:latest "
                 }
             } 
         }

@@ -18,7 +18,7 @@ pipeline {
         stage('PUSHING') {
             steps {
                  echo 'last one'
-                   sh " docker push samargooda/capstonProject "
+                   sh " docker push samargooda/capston_project "
                 }
             } 
         }

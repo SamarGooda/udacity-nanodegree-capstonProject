@@ -20,7 +20,7 @@ spec:
             - containerPort: 8000
           env:
             - name: ENVIRONMENT
-              value: DEV
+              value: PRODUCTION
             - name: HOST
               value: localhost
             - name: PORT

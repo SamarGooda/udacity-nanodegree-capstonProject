@@ -29,7 +29,14 @@ The Goal of this project is to create a pipeline that automates the proccess of 
 
 ### Blue-Green deployment
 
-I apply blue/green deployment through change in deployment and make rollout ,it apalies a new replica and terminates the oldest one . It displayes in the screen shots.
+blue/green deployment is applied as follows:
+
+first do some change in the Apps's deployment.
+then run a rollout. 
+
+`kubectl rollout status deployment/udacitypythonapp`
+
+and it starts to launch a new replica of the app and then terminating the old ones
  
 ![](https://github.com/SamarGooda/udacity-nanodegree-capstonProject/blob/master/screenshots/deployment1.jpeg)
 

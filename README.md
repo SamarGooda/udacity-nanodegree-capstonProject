@@ -9,10 +9,10 @@ The Goal of this project is to create a pipeline that automates the proccess of 
 - Deploying the app.
 
   The pipeline has these main stages:
-  - **TESTING**: Running unit testing on the code
-  - **DOCKERIZING**: Dockerizing the application into an image locally
+  - **Lint**: Running unit testing on the code
+  - **build**: Dockerizing the application into an image locally
   - **PUSHING**: Pushing the built image to DockerHub
-  - **DEPLOY**: Building the infrastructure and Kubernetes cluster using AWS cloudformation and deploy the Pyhthon app
+  - **Deploy**: Building the infrastructure and Kubernetes cluster using AWS cloudformation and deploy the Pyhthon app
   
 ## Getting starting:
 - Install jenkins, git, python3 + pip3, docker
@@ -26,7 +26,11 @@ The Goal of this project is to create a pipeline that automates the proccess of 
 #
 ![](https://github.com/SamarGooda/udacity-nanodegree-capstonProject/blob/master/screenshots/output3.png)
 #
+
 ### Blue-Green deployment
+
+I apply blue/green deployment through change in deployment and make rollout ,it apalies a new replica and terminates the oldest one . It displayes in the screen shots.
+ 
 ![](https://github.com/SamarGooda/udacity-nanodegree-capstonProject/blob/master/screenshots/deployment1.jpeg)
 
 ![](https://github.com/SamarGooda/udacity-nanodegree-capstonProject/blob/master/screenshots/deployment2.jpeg)
